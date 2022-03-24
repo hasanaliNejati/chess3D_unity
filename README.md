@@ -1,1 +1,3 @@
-<img src="/assets/img/MarineGEO_logo.png" alt="MarineGEO circle logo" style="height: 100px; width:100px;"/>
+**chess 3D**
+
+art : https://assetstore.unity.com/packages/3d/props/board-games-3d-pack-39912
