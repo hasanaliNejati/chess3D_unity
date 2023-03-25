@@ -12,6 +12,9 @@ namespace Chess
     {
 
         public MeshRenderer renderer;
+        public Color normall;
+        public Color hower;
+        public Color highlight;
 
         private TileType _type;
         internal TileType type
@@ -22,13 +25,13 @@ namespace Chess
                 switch (value)
                 {
                     case TileType.normall:
-                        renderer.material.color = new Color();
+                        renderer.material.color = normall;
                         break;
                     case TileType.Hower:
-                        renderer.material.color = Color.red;
+                        renderer.material.color = hower;
                         break;
                     case TileType.highlight:
-                        renderer.material.color = Color.blue;
+                        renderer.material.color = highlight;
                         break;
                     default:
                         break;

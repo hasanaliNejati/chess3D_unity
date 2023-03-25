@@ -130,6 +130,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   renderer: {fileID: 3975213397888948749}
+  normall: {r: 0, g: 0, b: 0, a: 0}
+  hower: {r: 1, g: 0, b: 0, a: 0.48235294}
+  highlight: {r: 0, g: 0.3333335, b: 1, a: 0.7529412}
 --- !u!65 &3975213398871425097
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -14,6 +14,7 @@ namespace Chess
 
         [Header("Pices")]
         [SerializeField] private ChessPiece[] chessPieceObjects;
+        [SerializeField] private TableGenetareData tableGenerateData;
 
         [Header("GUI")]
         [SerializeField] private GUIGameplay ui;
@@ -146,29 +147,73 @@ namespace Chess
         private void GenerateAllPieces()
         {
             pieces = new ChessPiece[bordCountX, bordCountY];
-            //team 0
-            GenerateSinglePieces(0, 0, 0, PieceType.Rook);
-            GenerateSinglePieces(1, 0, 0, PieceType.Knight);
-            GenerateSinglePieces(2, 0, 0, PieceType.Bishop);
-            GenerateSinglePieces(3, 0, 0, PieceType.Queen);
-            GenerateSinglePieces(4, 0, 0, PieceType.King);
-            GenerateSinglePieces(5, 0, 0, PieceType.Bishop);
-            GenerateSinglePieces(6, 0, 0, PieceType.Knight);
-            GenerateSinglePieces(7, 0, 0, PieceType.Rook);
-            for (int i = 0; i < bordCountX; i++)
-                GenerateSinglePieces(i, 1, 0, PieceType.Pawn);
+            if (tableGenerateData)
+            {
 
-            //team 1
-            GenerateSinglePieces(0, 7, 1, PieceType.Rook);
-            GenerateSinglePieces(1, 7, 1, PieceType.Knight);
-            GenerateSinglePieces(2, 7, 1, PieceType.Bishop);
-            GenerateSinglePieces(3, 7, 1, PieceType.Queen);
-            GenerateSinglePieces(4, 7, 1, PieceType.King);
-            GenerateSinglePieces(5, 7, 1, PieceType.Bishop);
-            GenerateSinglePieces(6, 7, 1, PieceType.Knight);
-            GenerateSinglePieces(7, 7, 1, PieceType.Rook);
-            for (int i = 0; i < bordCountX; i++)
-                GenerateSinglePieces(i, 6, 1, PieceType.Pawn);
+                for (int x = 0; x < tableGenerateData.table.GetLength(0); x++)
+                {
+                    for (int y = 0; y < tableGenerateData.table.GetLength(1); y++)
+                    {
+                        if (!string.IsNullOrEmpty(tableGenerateData.table[x, y]))
+                        {
+
+                            var data = tableGenerateData.table[x, y].Split(',');
+                            int team = int.Parse(data[0]);
+                            //P,B,R,K,Q,King
+                            switch (data[1])
+                            {
+                                case "P":
+                                    GenerateSinglePieces(x, y, team, PieceType.Pawn);
+                                    break;
+                                case "B":
+                                    GenerateSinglePieces(x, y, team, PieceType.Bishop);
+                                    break;
+                                case "R":
+                                    GenerateSinglePieces(x, y, team, PieceType.Rook);
+                                    break;
+                                case "K":
+                                    GenerateSinglePieces(x, y, team, PieceType.Knight);
+                                    break;
+                                case "Q":
+                                    GenerateSinglePieces(x, y, team, PieceType.Queen);
+                                    break;
+                                case "King":
+                                    GenerateSinglePieces(x, y, team, PieceType.King);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+
+                //team 0
+                GenerateSinglePieces(0, 0, 0, PieceType.Rook);
+                GenerateSinglePieces(1, 0, 0, PieceType.Knight);
+                GenerateSinglePieces(2, 0, 0, PieceType.Bishop);
+                GenerateSinglePieces(3, 0, 0, PieceType.Queen);
+                GenerateSinglePieces(4, 0, 0, PieceType.King);
+                GenerateSinglePieces(5, 0, 0, PieceType.Bishop);
+                GenerateSinglePieces(6, 0, 0, PieceType.Knight);
+                GenerateSinglePieces(7, 0, 0, PieceType.Rook);
+                for (int i = 0; i < bordCountX; i++)
+                    GenerateSinglePieces(i, 1, 0, PieceType.Pawn);
+
+                //team 1
+                GenerateSinglePieces(0, 7, 1, PieceType.Rook);
+                GenerateSinglePieces(1, 7, 1, PieceType.Knight);
+                GenerateSinglePieces(2, 7, 1, PieceType.Bishop);
+                GenerateSinglePieces(3, 7, 1, PieceType.Queen);
+                GenerateSinglePieces(4, 7, 1, PieceType.King);
+                GenerateSinglePieces(5, 7, 1, PieceType.Bishop);
+                GenerateSinglePieces(6, 7, 1, PieceType.Knight);
+                GenerateSinglePieces(7, 7, 1, PieceType.Rook);
+                for (int i = 0; i < bordCountX; i++)
+                    GenerateSinglePieces(i, 6, 1, PieceType.Pawn);
+            }
         }
         private void GenerateSinglePieces(int x, int y, int team, PieceType type)
         {
@@ -184,7 +229,7 @@ namespace Chess
         {
             selectedPiece = selectedPos;
             var _availableTiles = pieces[selectedPiece.x, selectedPiece.y].GetAvailableTiles(pieces, selectedPiece, bordCountX, bordCountY);
-            HighlightTiles(PreventMate(_availableTiles,selectedPos));
+            HighlightTiles(PreventMate(_availableTiles, selectedPos));
             CheckSpecialMove(selectedPos);
 
 
@@ -394,10 +439,11 @@ namespace Chess
 
 
             //check avalable move
-            foreach (var item in available) {
+            foreach (var item in available)
+            {
 
                 //clon pieces list
-                ChessPiece[,] _pieces = new ChessPiece[bordCountX,bordCountY];
+                ChessPiece[,] _pieces = new ChessPiece[bordCountX, bordCountY];
                 for (int x = 0; x < bordCountX; x++)
                     for (int y = 0; y < bordCountY; y++)
                         _pieces[x, y] = pieces[x, y];
@@ -417,7 +463,7 @@ namespace Chess
                         {
                             foreach (Vector2Int v in _pieces[x, y].GetAvailableTiles(_pieces, new Vector2Int(x, y), bordCountX, bordCountY))
                             {
-                                if (kingPos == v) 
+                                if (kingPos == v)
                                     output.Remove(item);
                                 continue;
                             }
@@ -431,8 +477,8 @@ namespace Chess
         {
             for (int x = 0; x < bordCountX; x++)
                 for (int y = 0; y < bordCountY; y++)
-                    if(pieces[x,y] != null && movedTeam != pieces[x, y].team)
-                        if (PreventMate(pieces[x, y].GetAvailableTiles(pieces, new Vector2Int(x, y), bordCountX, bordCountY),new Vector2Int(x,y)).Count > 0)
+                    if (pieces[x, y] != null && movedTeam != pieces[x, y].team)
+                        if (PreventMate(pieces[x, y].GetAvailableTiles(pieces, new Vector2Int(x, y), bordCountX, bordCountY), new Vector2Int(x, y)).Count > 0)
                             return false;
 
             return true;

@@ -771,6 +771,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
@@ -2386,6 +2387,7 @@ MonoBehaviour:
   - {fileID: 8621765695650747737, guid: 0881112514f873146b14382cfed52094, type: 3}
   - {fileID: 1542162208519742654, guid: 37337e1a8011feb40bdd8afd088d2039, type: 3}
   - {fileID: 6384306543015488866, guid: b6a3cfe915b416148a7ad16e1f453021, type: 3}
+  tableGenerateData: {fileID: 11400000, guid: e5431e0811bcf514d80692918709560f, type: 2}
   ui: {fileID: 2124874257}
 --- !u!4 &2114321524
 Transform:
